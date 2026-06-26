@@ -24,9 +24,9 @@ A heavily gamified flashcard, spaced repetition assistant where each concept/dec
 - End users (learners)
 
 ## Personas (references)
-- Senior Software Engineer: `/home/pop/Documents/repos/gami-fried/personas/senior-software-engineer.md`
-- Senior Product Designer: `/home/pop/Documents/repos/gami-fried/personas/senior-product-design.md`
-- Senior Product Manager: `/home/pop/Documents/repos/gami-fried/personas/senior-product-manager.md`
+- Senior Software Engineer: `/specs/personas/senior-software-engineer.md`
+- Senior Product Designer: `/specs/personas/senior-product-design.md`
+- Senior Product Manager: `/specs/personas/senior-product-manager.md`
 
 ## Opportunity framing
 - Leverage familiar game design elements (points, badges, streaks, progress bars) to drive engagement.
