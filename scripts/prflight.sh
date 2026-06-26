@@ -75,7 +75,7 @@ else
   echo "Missing labels detected (to create):"; echo "$missing_labels";
 fi
 
-if [ "${APPLY,,}" = "true" ]; then
+if [ "${APPLY,,}" = "--apply" ] || [ "${APPLY,,}" = "true" ]; then
   if [ -n "$missing_labels" ]; then
     echo "Applying missing labels..."
     while IFS= read -r lab; do
