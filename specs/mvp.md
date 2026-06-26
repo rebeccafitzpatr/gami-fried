@@ -1,111 +1,76 @@
-# Gami-Fried MVP — User Flow → Features → Epics
+# Gami-Fried MVP — User Flow → Features → Epics (Revised MVP)
 
-> Defines the **MVP user experience** as an end-to-end user flow, then maps each
-> step to **features**, groups those into **feature groups**, and ties them back
-> to **user stories / epics**.
->
-> Builds on `specs/product_discovery.md` and `specs/project_proposal.md`, scoped
-> to the **Must / Should** items from the MVP MoSCoW. The cooking metaphor runs
-> throughout: decks = **recipes**, the catalog = **the menu**, starting a session
-> = **placing an order**, studying = **cooking**, mastering a deck = **serving the
-> dish**.
-
----
+> Defines the MVP user experience as an end-to-end flow, then maps each step to features, groups them into feature groups, and ties them back to user stories / epics. The cooking metaphor remains central: decks are recipes, the catalog is the menu, starting a session is placing an order, and serving a dish is mastering a deck.
 
 ## 1. MVP scope (what's in)
 
-**In:** account creation/sign-in, browse the menu (deck catalog), start & run a
-study session (cooking) with spaced-repetition grading, doneness/progress
-feedback, core rewards (points, streaks, mastery), profile/history, and authoring
-(CRUD) of decks & cards.
+In the revised MVP, the user journey centers on personalized AI-generated content and a day-based study loop that simulates a small shop/day:
 
-**Out (post-MVP):** multiplayer / live study rooms, advanced badge trees,
-insights/analytics dashboards, social features.
+- User authentication: sign in / sign up
+- Topic input: user enters a subject/topic they want to learn
+- AI deck generation: an AI API creates 4–5 flashcard decks (each deck is a recipe) related to the topic
+- Game load: on load, the UI presents 2–3 available decks (the current menu)
+- Shop & session: user opens the shop to start a study session; this represents taking an order
+- Customer orders: customers arrive with orders that specify a range of decks to study (combinations of decks to go through)
+- Study loop: for each order, the user repeatedly studies through the specified decks using flashcards; progress is tracked with a SM2-like scheduler, a doneness indicator, and a timer
+- Day summary: after 2–3 customers, the shop closes for the day and a summary of results is shown (points, streaks, mastery, deck-level progress)
+- Next day: user can move on to the next day and repeat the flow
+- Post-MVP: potential for progressively increasing difficulty and introducing more features
 
----
+In scope, not in MVP: multiplayer/live rooms, advanced analytics dashboards, social features, and deeper AI-content curation beyond initial topic-based deck generation.
 
-## 2. The MVP user flow (what the user experiences)
+## 2. The MVP user flow (end-to-end experience)
 
-A new learner's golden path, end to end:
+New learner's day in a nutshell:
 
 ```
- (1) Land            → see value prop + "Get cooking" call to action
-   │
- (2) Sign up / in    → create account or log in
-   │
- (3) Browse the menu → deck catalog with mastery indicators; search/filter
-   │
- (4) Open a recipe   → deck detail: description, card count, current mastery
-   │
- (5) Place an order  → start a study session
-   │
- (6) Cook            → see one card, reveal answer, grade recall (e.g. again/good/easy)
-   │      ▲
-   │      └─ repeat: scheduler picks next card; doneness meter + timer update
-   │
- (7) Plate up        → session summary: cards reviewed, accuracy, points earned, streak
-   │
- (8) Serve the dish  → if deck mastery threshold reached → mastery reward
-   │
- (9) Profile/history → view points, streak, mastery per deck, past sessions
-   │
-(10) Author (opt.)   → create/edit/delete own decks & cards
+(1) Sign in / sign up
+(2) Enter topic to learn
+(3) AI generates 4–5 decks for the topic
+(4) Game loads; 2–3 decks appear on the menu
+(5) Open shop and start a study session (place an order)
+(6) For each order: work through the selected decks (cards) – reveal, recall, rate (again/good/easy) – scheduler selects next card; doneness + timer update
+(7) End of day: session summary (points, streak, accuracy, decks mastered)
+(8) Option to advance to the next day and repeat
 ```
-
-Each numbered step is mapped below.
-
----
 
 ## 3. Flow step → feature → feature group → epic
 
 | # | User flow step | Feature(s) | Feature group | Epic |
-| --- | --- | --- | --- | --- |
-| 1 | Land on home / value prop | Landing page, "Get cooking" CTA, responsive shell, theme (light/dark) | Onboarding & Shell | **Epic D — Accounts & Onboarding** |
-| 2 | Sign up / sign in | Registration, login, session/auth scaffold, password hashing, validation | Identity & Access | **Epic D — Accounts & Onboarding** |
-| 3 | Browse the menu | Deck catalog, mastery indicators, search/filter, responsive cards | Discovery ("The Menu") | **Epic A — Deck Catalog** |
-| 4 | Open a recipe | Deck detail view, card count, mastery %, start button | Discovery ("The Menu") | **Epic A — Deck Catalog** |
-| 5 | Place an order | Start session, session state init | Study Loop ("Cooking") | **Epic B — Study Session** |
-| 6 | Cook (review cards) | Card presentation, reveal, recall grading, SM2-like scheduler, doneness meter, timer, attempt recording | Study Loop ("Cooking") | **Epic B — Study Session** |
-| 7 | Plate up (summary) | Session summary, accuracy, points earned, streak update | Study Loop + Rewards | **Epic B** + **Epic C — Gamification** |
-| 8 | Serve the dish (mastery) | Mastery calculation, mastery threshold, mastery reward/badge | Progress & Rewards | **Epic C — Gamification & Rewards** |
-| 9 | Profile & history | Profile, points/streak display, per-deck mastery, session history | Progress & Rewards | **Epic C** + **Epic D** |
-| 10 | Author decks/cards | Create/read/update/delete decks & cards, input validation/sanitization | Authoring (CRUD) | **Epic E — Authoring** |
-| — | (cross-cutting) | Deploy FE+BE, Scalar API docs, RBAC, state management, README/specs | Platform & Submission | **Epic F — Platform** |
-
----
+|---|---|---|---|---|
+| 1 | Sign in / sign up | Auth scaffold, password hashing, validation | Identity & Access | Epic D — Accounts & Onboarding |
+| 2 | Enter topic | Topic input, AI deck generation trigger | AI Content Generation | Epic G — AI Deck Generator |
+| 3 | AI creates decks | AI-generated 4–5 decks loaded | AI Content Generation | Epic G — AI Deck Generator |
+| 4 | Game loads; show 2–3 decks | Deck catalog with previews and mastery indicators | Discovery ("The Menu") | Epic A — Deck Catalog |
+| 5 | Open shop and start a study session | Session start, order management, session state | Study Loop ("Cooking") | Epic B — Study Session |
+| 6 | Customer orders arrive | Order queue, deck selection by order, batch loading | Orders & Orchestration | Epic C — Customer Orders |
+| 7 | Study through each order | Recurrent study loop across decks per order; SM2-like scheduling, doneness, timer | Study Loop ("Cooking") | Epic B — Study Session |
+| 8 | Day summary | Day end summary, analytics, reward tallies | Day-End & Rewards | Epic D — Day Summary & Rewards |
+| 9 | Next day | Day progression, daily reset, new AI-generated decks (optional) | Day Progression | Epic F — Day Progression |
+| - | (cross-cutting) | Deploy FE+BE, RBAC, state mgmt, README/specs | Platform & Submission | Epic G — Platform & Submission |
 
 ## 4. Feature groups (grouped view)
 
 ### FG1 — Onboarding & Shell *(Epic D)*
-App shell, responsive layout, theme switching, landing page + CTA. First
-impression and navigation backbone.
+App shell, responsive layout, theme switching, landing page + CTA. First impression and navigation backbone.
 
 ### FG2 — Identity & Access *(Epic D)*
-Registration, login, auth scaffold, RBAC, password hashing, input validation.
-Establishes trust and gates personalized data.
+Registration, login, auth scaffold, RBAC, password hashing, input validation. Establishes trust and gates personalized data.
 
 ### FG3 — Discovery / "The Menu" *(Epic A)*
-Deck catalog, mastery indicators, search/filter, deck detail. How learners find
-and choose what to study.
+Deck catalog, mastery indicators, search/filter, deck detail. How learners find and choose what to study.
 
 ### FG4 — Study Loop / "Cooking" *(Epic B)*
-Session lifecycle (start → review → complete), card presentation & grading,
-SM2-like scheduler, doneness meter, timer, attempt recording, summary. The core
-learning loop and primary value.
+Session lifecycle (start → review → complete), card presentation & grading, SM2-like scheduler, doneness meter, timer, attempt recording, summary. The core learning loop and primary value.
 
 ### FG5 — Progress & Rewards *(Epic C)*
-Points, streaks, mastery calculation + threshold, mastery rewards/badges,
-profile, history. Drives engagement and retention.
+Points, streaks, mastery calculation + threshold, mastery rewards/badges, profile, history. Drives engagement and retention.
 
 ### FG6 — Authoring / CRUD *(Epic E)*
-Create/edit/delete decks and cards with validation. Satisfies the CRUD
-requirement and lets users grow content.
+Create/edit/delete decks and cards with validation. Satisfies the CRUD requirement and lets users grow content.
 
 ### FG7 — Platform & Submission *(Epic F)*
-Deployment (FE + BE), Scalar API docs, the 3 declared advanced features, README
-sections, `/specs` AI evidence. Required to ship and be marked.
-
----
+Deployment (FE + BE), Scalar API docs, the 3 declared advanced features, README sections, `/specs` AI evidence. Required to ship and be marked.
 
 ## 5. Epics & user stories (MVP)
 
@@ -126,6 +91,8 @@ sections, `/specs` AI evidence. Required to ship and be marked.
   - *AC:* meter reflects progress through due cards; timer visible during session.
 - **B4** As a learner, I get a session summary so I can see how I did.
   - *AC:* `POST /sessions/{id}/complete` returns cards reviewed, accuracy, points, streak.
+- **B5** As a learner, I can advance to the next day so I can continue my learning journey.
+  - *AC:* state resets for a new day, new deck orders are prepared.
 
 ### Epic C — Gamification & Rewards — *FG5*
 - **C1** As a learner, I earn points for studying so I feel rewarded.
@@ -156,20 +123,22 @@ sections, `/specs` AI evidence. Required to ship and be marked.
 - **F3** As markers, the README lists exactly 3 advanced features so they're credited.
   - *AC:* README has deployment link, theme/feature explanation, 3 advanced features, AI-usage narrative, self-reflection; `/specs` holds AI prompt evidence.
 
----
+### Epic G — AI Deck Generator — *FG2, FG3*
+- **G1** As a learner, I can enter a topic so I can receive relevant study material.
+  - *AC:* topic input field accepts text; triggers AI deck generation.
+- **G2** As a learner, I receive 4–5 AI-generated decks based on my topic so I have options to study.
+  - *AC:* decks are created via AI API; each deck contains a set of flashcards.
 
 ## 6. MVP traceability summary
 
 | Epic | Feature group(s) | Flow steps covered |
 | --- | --- | --- |
-| A — Deck Catalog | FG3 | 3, 4 |
-| B — Study Session | FG4 | 5, 6, 7 |
-| C — Gamification & Rewards | FG5 | 7, 8, 9 |
-| D — Accounts & Onboarding | FG1, FG2 | 1, 2, 9 |
+| A — Deck Catalog | FG3 | 4 |
+| B — Study Session | FG4 | 5, 6, 7, 8 |
+| C — Gamification & Rewards | FG5 | 7 |
+| D — Accounts & Onboarding | FG1, FG2 | 1 |
 | E — Authoring (CRUD) | FG6 | 10 |
 | F — Platform & Submission | FG7 | cross-cutting |
+| G — AI Deck Generator | FG2, FG3 | 2, 3 |
 
-> **Definition of Done (MVP):** a new learner can sign up, browse the menu, run a
-> study session with spaced repetition + doneness feedback, earn points/streaks,
-> master a deck, and view history — on a deployed FE+BE with Scalar docs, RBAC,
-> ≥2 security measures, unit tests, and a complete README + `/specs` evidence.
+> **Definition of Done (MVP):** a new learner can sign up, enter a topic, receive AI-generated decks, run a study session with spaced repetition + doneness feedback, earn points/streaks, master a deck, and view history — on a deployed FE+BE with Scalar docs, RBAC, ≥2 security measures, unit tests, and a complete README + `/specs` evidence.
