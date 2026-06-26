@@ -17,3 +17,4 @@ Created specs/project_proposal.md - a project breakdown viewed through the three
 
 Created specs/mvp.md - defines the MVP as an end-to-end user flow (what the learner experiences, step by step) and maps each step to features, feature groups, and user stories/epics, with a traceability table tying epics back to flow steps. This narrows product_discovery/project_proposal down to the Must/Should MVP scope.
 
+Added 35 issues in the Github to breakdown the project. Automated this process using AI and Devin agent
