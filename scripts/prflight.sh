@@ -20,7 +20,7 @@ mkdir -p "$LOG_DIR"
 exec > >(tee -a "$LOG_FILE") 2>&1
 
 # Prerequisites
-if ! command -v gh >/dev/null 1>&2; then
+if ! command -v gh >/dev/null 2>&1; then
   echo "Error: gh CLI is not installed. Install it from https://cli.github.com/ and run gh auth login." >&2
   exit 1
 fi
