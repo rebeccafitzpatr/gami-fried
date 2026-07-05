@@ -18,3 +18,7 @@ Created specs/project_proposal.md - a project breakdown viewed through the three
 Created specs/mvp.md - defines the MVP as an end-to-end user flow (what the learner experiences, step by step) and maps each step to features, feature groups, and user stories/epics, with a traceability table tying epics back to flow steps. This narrows product_discovery/project_proposal down to the Must/Should MVP scope.
 
 Added 35 issues in the Github to breakdown the project. Automated this process using AI and Devin agent
+
+
+## 3/7/26
+I notice that it is challenging to work with the bulk produced AI content i.e 34 produced issues and when it generates entire files at a time. Even if it is working or 'correct' it is difficult for myself to navigate these generated content and particularly when coming back after some time away from the code base. In this project, it is important to make sure that the content that AI produces is managable 
