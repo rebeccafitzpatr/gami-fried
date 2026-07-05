@@ -1,0 +1,36 @@
+title,body,labels,assignees,milestone
+"D-01: Implement auth scaffold (signup/login) with RBAC groundwork","Create authentication scaffold for sign up and sign in; establish initial RBAC roles (Learner, Admin) and protected API endpoints.","epic:D,frontend,backend,auth,needs-assignment","",MVP
+"D-02: Password hashing and validation","Add secure password storage (bcrypt/Argon2) and validate hashed passwords during login.","epic:D,backend,security,needs-assignment","",MVP
+"D-03: JWT-based authentication and session management","Implement JWT issuance on login, validation on protected endpoints, and optional refresh flow.","epic:D,backend,auth,needs-assignment","",MVP
+"D-04: RBAC middleware and protected routes","Enforce role-based access controls on core APIs (decks, cards, sessions); return proper responses on violations.","epic:D,backend,security,needs-assignment","",MVP
+"D-05: Theme switching (light/dark) and persistence","Add UI theme toggle with user preference persistence across sessions.","epic:D,frontend,ui,needs-assignment","",MVP
+"G-01: Topic input flow (UI) to trigger AI generation","UI field to enter topic; triggers AI deck generation API and shows loading state.","epic:G,frontend,ai,needs-assignment","",MVP
+"G-02: AI deck creation endpoint (4–5 decks)","Backend endpoint to request AI-generated decks; returns 4-5 decks with cards.","epic:G,backend,ai,needs-assignment","",MVP
+"G-03: AI prompts management and logging","Store prompts, versions, and AI usage logs for audit and improvement.","epic:G,backend,docs,ai,needs-assignment","",MVP
+"G-04: AI failure handling and fallback","Gracefully handle AI failures with user-friendly messaging and fallback options.","epic:G,backend,ai,resilience,needs-assignment","",MVP
+"G-05: AI usage narrative in README","Document how AI is used (prompts, safeguards) in the README and specs prompts directory.","epic:G,docs,ai,needs-assignment","",MVP
+"A-01: Deck catalog UI (2–3 decks on load)","Show initial 2-3 decks in the catalog with title, card count, and mastery badge.","epic:A,frontend,ui,needs-assignment","",MVP
+"A-02: Deck detail view","Deck detail page showing description, card count, mastery, and start button.","epic:A,frontend,needs-assignment","",MVP
+"A-03: Deck search/filter","Search decks by text; filter by category/difficulty; show empty state handling.","epic:A,frontend,needs-assignment","",MVP
+"A-04: DeckCard component stories (Storybook)","Create Storybook stories for core deck UI components (min 3 states each).","epic:A,frontend,docs,testing,needs-assignment","",MVP
+"A-05: Basic API surface for decks/cards","CRUD endpoints for decks and cards; read-only for learners; basic validation.","epic:A,backend,api,needs-assignment","",MVP
+"B-01: Start session endpoint","Create a new study session bound to a user and a deck; initial card loaded.","epic:B,backend,api,needs-assignment","",MVP
+"B-02: Card presentation, reveal and grading","UI for revealing answers and grading recall; record Attempt; schedule next card.","epic:B,frontend,ai/backend,needs-assignment","",MVP
+"B-03: SM2-like scheduler and doneness timer","Implement lightweight SM2-like scheduler; add per-session timer.","epic:B,backend,scheduler,needs-assignment","",MVP
+"B-04: Session summary","Return summary with cards reviewed, accuracy, points, and streak.","epic:B,backend,needs-assignment","",MVP
+"B-05: Day progression trigger","Support moving to the next day with new decks/orders; reset state as needed.","epic:B,frontend,backend,needs-assignment","",MVP
+"C-01: Points system","Award points for studying; reflect in profile.","epic:C,backend,gamification,needs-assignment","",MVP
+"C-02: Streaks","Track and display study streaks; ensure daily activity is counted.","epic:C,backend,gamification,needs-assignment","",MVP
+"C-03: Mastery rewards/badges","Detect deck mastery; award badges and emit events.","epic:C,backend,gamification,needs-assignment","",MVP
+"C-04: Profile/history view","Profile page with per-deck mastery, total points, streaks, and past sessions.","epic:C,frontend,ui,needs-assignment","",MVP
+"C-05: Visual progress indicators","Doneness indicators, progress bars, and badges in UI.","epic:C,frontend,ui,needs-assignment","",MVP
+"D-01: CI/CD pipeline","Automate build, test, and deploy flows; PR checks.","epic:D,devops,ci/cd,needs-assignment","",MVP
+"D-02: Dockerize FE and BE","Docker compose setup for frontend and backend; dev env parity.","epic:D,infra,docker,needs-assignment","",MVP
+"D-03: Scalar API docs UI","Expose scalar docs UI for API references (no Swagger).","epic:D,backend,docs,needs-assignment","",MVP
+"D-04: README updates (AI usage, advanced features)","Document AI usage narrative and 3 advanced features; update README.","epic:D,docs,ai,needs-assignment","",MVP
+"D-05: Spec alignment and evidence storage","Store AI prompts and evidence in specs/ prompts directory.","epic:D,docs,ai,needs-assignment","",MVP
+"X-01: Storybook integration","Initialize Storybook and add starter stories for core components.","cross-cutting,frontend,docs,needs-assignment","",MVP
+"X-02: Accessibility audit","Perform basic accessibility checks for core flows; track issues.","cross-cutting,frontend,accessibility,needs-assignment","",MVP
+"X-03: Cypress end-to-end tests","Develop Cypress tests for critical user flows (signin, topic input, AI deck gen, study loop).","cross-cutting,testing,e2e,needs-assignment","",MVP
+"X-04: Logging & metrics","Structured logging and basic metrics (latency, error rate) for observability.","cross-cutting,backend,observability,needs-assignment","",MVP
+"X-05: Data migrations & seed data","Seed initial decks/cards; manage migrations for MVP data model.","cross-cutting,backend,data,needs-assignment","",MVP
