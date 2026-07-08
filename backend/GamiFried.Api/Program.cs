@@ -1,8 +1,11 @@
+using GamiFried.Api.Models;
+using GamiFried.Api.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddSingleton<DeckStore>();
 
 var app = builder.Build();
 
@@ -32,6 +35,14 @@ app.MapGet("/weatherforecast", () =>
     return forecast;
 })
 .WithName("GetWeatherForecast");
+
+app.MapPost("/decks", (CreateDeckRequest req, DeckStore store) =>
+{
+    var deck = store.CreateDeck(req.Name);
+    return Results.Created($"/decks/{deck.Id}", deck);
+}).WithName("CreateDeck");
+
+app.MapGet("/decks", (DeckStore store) => store.Decks);
 
 app.Run();
 
