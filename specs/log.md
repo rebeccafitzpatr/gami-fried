@@ -22,3 +22,6 @@ Added 35 issues in the Github to breakdown the project. Automated this process u
 
 ## 3/7/26
 I notice that it is challenging to work with the bulk produced AI content i.e 34 produced issues and when it generates entire files at a time. Even if it is working or 'correct' it is difficult for myself to navigate these generated content and particularly when coming back after some time away from the code base. In this project, it is important to make sure that the content that AI produces is managable 
+
+## 8/7/26
+Added endpoints to create a new seeded deck and get all created decks. Next step is to persist these decks, display all decks on frontend and add AI api to AI generate decks
