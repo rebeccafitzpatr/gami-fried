@@ -22,3 +22,23 @@ export const createDeck = async (name: string = "My Anki Style Deck"): Promise<D
   const data: Deck = await resp.json();
   return data;
 };
+
+export const getDecks = async (): Promise<Deck[]> => {
+  const resp = await fetch('http://localhost:5200/decks');
+  if (!resp.ok) {
+    const text = await resp.text();
+    throw new Error(`Request failed: ${resp.status} ${text}`);
+  }
+  const data: Deck[] = await resp.json();
+  return data;
+};
+
+export const getDeckById = async (id: string): Promise<Deck> => {
+  const resp = await fetch(`http://localhost:5200/decks/${id}`);
+  if (!resp.ok) {
+    const text = await resp.text();
+    throw new Error(`Request failed: ${resp.status} ${text}`);
+  }
+  const data: Deck = await resp.json();
+  return data;
+};
