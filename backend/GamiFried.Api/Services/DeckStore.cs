@@ -54,6 +54,16 @@ public class DeckStore
         }
     }
 
+    public Deck AddDeck(Deck deck)
+    {
+        lock (_lock)
+        {
+            decks.Add(deck);
+            Save();
+        }
+        return deck;
+    }
+
     private void Save()
     {
         try
