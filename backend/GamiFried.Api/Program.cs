@@ -1,12 +1,20 @@
 using GamiFried.Api.Models;
 using GamiFried.Api.Services;
+using System.Text.Json; 
+using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+    {
+        // Use camelCase in JSON so frontend gets { id, name, cards: [{ question, answer }] }
+        options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+        // Optional: keep dictionary keys as-is
+        // options.JsonSerializerOptions.DictionaryKeyPolicy = null;
+    });
 
 builder.Services.AddCors(options =>
 {
@@ -62,6 +70,11 @@ app.MapPost("/decks", (CreateDeckRequest req, DeckStore store) =>
 }).WithName("CreateDeck");
 
 app.MapGet("/decks", (DeckStore store) => store.Decks);
+app.MapGet("/decks/{id:guid}", (Guid id, DeckStore store) =>
+{
+    var deck = store.GetDeckById(id);
+    return deck is not null ? Results.Ok(deck) : Results.NotFound();
+}).WithName("GetDeckById");
 app.MapControllers();
 
 app.Run();
