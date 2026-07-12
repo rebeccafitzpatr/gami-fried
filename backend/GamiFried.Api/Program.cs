@@ -6,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddControllers();
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -15,6 +17,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddSingleton<DeckStore>();
+builder.Services.AddHttpClient<DeckGenerator, OpenAIDeckGenerator>();
 
 var app = builder.Build();
 
@@ -59,6 +62,7 @@ app.MapPost("/decks", (CreateDeckRequest req, DeckStore store) =>
 }).WithName("CreateDeck");
 
 app.MapGet("/decks", (DeckStore store) => store.Decks);
+app.MapControllers();
 
 app.Run();
 
