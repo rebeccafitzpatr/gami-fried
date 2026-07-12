@@ -114,3 +114,6 @@ dist
 
 bin/
 obj/
+
+**Properties/launchSettings.json
+
