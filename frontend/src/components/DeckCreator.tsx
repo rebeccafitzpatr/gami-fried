@@ -1,17 +1,18 @@
 import React, { JSX, useState } from 'react';
-import { createDeck, Deck, Card } from '../services/DeckServices';
+import { createDeck, Deck, Card, generateAIDeck } from '../services/DeckServices';
 
 const DeckCreator= (): JSX.Element =>  {
   const [deck, setDeck] = useState<Deck | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [name, setName] = useState<string>("My Anki Style Deck");
+  const [name, setName] = useState<string>("");
+  const [prompt, setPrompt] = useState<string>("");
 
   const generate = async () => {
     setLoading(true);
     setError(null);
     try {
-      const d = await createDeck(name);
+      const d = await generateAIDeck(prompt, name);
       setDeck(d);
     } catch (err: any) {
       setError(err?.message ?? 'Unknown error');
@@ -20,12 +21,19 @@ const DeckCreator= (): JSX.Element =>  {
     }
   };
 
+  
+
   return (
     <div>
       <input
         value={name}
         onChange={e => setName(e.target.value)}
         placeholder="Deck name"
+      />
+      <input
+        value={prompt}
+        onChange={e => setPrompt(e.target.value)}
+        placeholder="Enter Prompt Here"
       />
       <button onClick={generate} disabled={loading}>
         {loading ? 'Generating...' : 'Generate New Deck'}
