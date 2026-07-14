@@ -22,19 +22,19 @@ public class DeckStore
 
     public IReadOnlyList<Deck> Decks => decks.AsReadOnly();
 
-    public Deck CreateDeck(string? name, string? prompt)
+    public Deck CreateDeck(string? name)
     {
-        // // Seed with a starter flashcard
-        // var starter = new Card("Example question 1", "Example answer 1");
-        // var deck = new Deck(Guid.NewGuid(), name ?? $"Deck-{Guid.NewGuid()}", new List<Card> { starter });
+        // Seed with a starter flashcard
+        var starter = new Card("Example question 1", "Example answer 1");
+        var deck = new Deck(Guid.NewGuid(), name ?? $"Deck-{Guid.NewGuid()}", new List<Card> { starter });
 
-        // lock (_lock)
-        // {
-        //     decks.Add(deck);
-        //     Save();
-        // }
+        lock (_lock)
+        {
+            decks.Add(deck);
+            Save();
+        }
 
-        // return deck;
+        return deck;
 
         // Create a new deck with the provided name and prompt
         
