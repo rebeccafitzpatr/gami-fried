@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { DeckDisplay } from './DeckDisplay';
 import { Deck } from '../services/DeckServices';
-import DeckEditor from '../components/DeckEditor';
+import { DeckEditor } from '../components/DeckEditor';
 
 export const DeckDisplayWrapper: React.FC = () => {
   const { id } = useParams<{ id: string }>();

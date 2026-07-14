@@ -25,6 +25,20 @@ export const updateDeck = async (id: string, name?: string, prompt?: string, car
   return data;
 };
 
+export const regenerateDeck = async (id: string, prompt?: string, name?: string): Promise<Deck> => {
+  const resp = await fetch(`http://localhost:5200/api/DeckGeneration/${id}/regenerate`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ Name: name, Prompt: prompt })
+  });
+  if (!resp.ok) {
+    const text = await resp.text();
+    throw new Error(`Request failed: ${resp.status} ${text}`);
+  }
+  const data: Deck = await resp.json();
+  return data;
+}
+
 export const createDeck = async (name: string = "My Anki Style Deck"): Promise<Deck> => {
   const resp = await fetch('http://localhost:5200/decks', {
     method: 'POST',

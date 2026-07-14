@@ -83,6 +83,20 @@ app.MapPut("/decks/{id:guid}", (Guid id, UpdateDeckRequest req, DeckStore store)
     return updated is null ? Results.NotFound() : Results.Ok(updated);
 }).WithName("UpdateDeck");
 
+app.MapPost("/decks/{id:guid}/regenerate", async (Guid id, RegenerateRequest req, DeckStore store, DeckGenerator ai) =>
+{
+    var deck = store.GetDeckById(id);
+    if (deck == null) return Results.NotFound();
+
+    var prompt = req.Prompt ?? deck.Prompt ?? "";
+    var name = req.Name ?? deck.Name;
+
+    var regenerated = await ai.GenerateDeckAsync(prompt, name);
+    store.UpdateDeck(id, name, regenerated.Prompt, regenerated.Cards);
+
+    return Results.Ok(store.GetDeckById(id));
+}).WithName("RegenerateDeck");
+
 app.MapControllers();
 
 app.Run();
