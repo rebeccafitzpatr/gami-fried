@@ -25,3 +25,6 @@ I notice that it is challenging to work with the bulk produced AI content i.e 34
 
 ## 8/7/26
 Added endpoints to create a new seeded deck and get all created decks. Next step is to persist these decks, display all decks on frontend and add AI api to AI generate decks
+
+## 14/7/26
+Having added the functionality to create deck using AI generated cards, I will store the prompts and allow editing to prompt and cards in deck => This requires versioning. A 'version' of the deck will be the deck associated with a particular prompt. 
