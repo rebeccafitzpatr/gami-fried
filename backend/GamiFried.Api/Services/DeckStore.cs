@@ -40,6 +40,27 @@ public class DeckStore
         
     }
 
+    public Deck? RemoveCard(Guid id, int index)
+    {
+        lock (_lock)
+        {
+            var deckIndex = decks.FindIndex(d => d.Id == id);
+            if (deckIndex < 0) return null;
+
+            var current = decks[deckIndex];
+            var cards = current.Cards.ToList();
+
+            if (index < 0 || index >= cards.Count) return null;
+
+            cards.RemoveAt(index);
+
+            var updated = current with { Cards = cards };
+            decks[deckIndex] = updated;
+            Save();
+            return updated;
+        }
+    }
+
     public Deck? UpdateDeck(Guid id, string? name = null, string? prompt = null, List<Card>? cards = null)
     {
         lock (_lock)

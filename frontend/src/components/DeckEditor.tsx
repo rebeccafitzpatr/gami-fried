@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Deck, Card, updateDeck, regenerateDeck } from '../services/DeckServices';
 
 interface Props {
@@ -21,6 +21,11 @@ export const DeckEditor: React.FC<Props> = ({ deck, onSaved, onCancel }) => {
 
   const addCard = () => setCards(c => [...c, { question: "", answer: "" }]);
 
+  const deleteCard = (idx: number) => {
+    // Remove locally
+    setCards(cs => cs.filter((_, i) => i !== idx));
+  };
+
   const save = async () => {
     setError(null);
     setLoading(true);
@@ -41,6 +46,12 @@ export const DeckEditor: React.FC<Props> = ({ deck, onSaved, onCancel }) => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    setName(deck.name);
+    setPrompt(deck.prompt ?? "");
+    setCards(deck.cards.map(c => ({ question: c.question, answer: c.answer })));
+  }, [deck?.id, deck?.name, deck?.prompt, deck?.cards]);
 
   // Minimal UI scaffold
   return (
@@ -63,6 +74,8 @@ export const DeckEditor: React.FC<Props> = ({ deck, onSaved, onCancel }) => {
               const v = ev.target.value;
               setCards(cs => cs.map((cc, i) => i === idx ? { ...cc, answer: v } : cc));
             }} placeholder="Answer" />
+            <button type="button" onClick={() => deleteCard(idx)}>Delete</button>
+
           </div>
         ))}
       </div>

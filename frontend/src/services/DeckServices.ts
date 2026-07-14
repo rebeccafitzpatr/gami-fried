@@ -87,3 +87,15 @@ export const getDeckById = async (id: string): Promise<Deck> => {
   const data: Deck = await resp.json();
   return data;
 };
+
+export const deleteCardFromDeck = async (deckId: string, index: number): Promise<Deck> => {
+  const resp = await fetch(`http://localhost:5200/decks/${deckId}/cards/${index}`, {
+    method: 'DELETE',
+  });
+  if (!resp.ok) {
+    const text = await resp.text();
+    throw new Error(`Request failed: ${resp.status} ${text}`);
+  }
+  const data: Deck = await resp.json();
+  return data;
+};

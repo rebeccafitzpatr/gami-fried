@@ -50,6 +50,13 @@ public class DeckGenerationController : ControllerBase
 
         return Ok(_store.GetDeckById(id));
     }
+
+    [HttpDelete("{id:guid}/cards/{cardIndex:int}")]
+    public IActionResult DeleteCard(Guid id, int cardIndex)
+    {
+        var updated = _store.RemoveCard(id, cardIndex);
+        return updated is null ? NotFound() : Ok(updated);
+    }
 }
 
 public class GenerateRequest
