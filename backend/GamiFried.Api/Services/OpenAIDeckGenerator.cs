@@ -76,7 +76,7 @@ public class OpenAIDeckGenerator : DeckGenerator
             cards.Add(new Card(qa.question, qa.answer));
         }
 
-        var deck = new Deck(Guid.NewGuid(), name ?? $"Deck-{Guid.NewGuid()}", cards);
+        var deck = new Deck(Guid.NewGuid(), name ?? $"Deck-{Guid.NewGuid()}", cards, prompt);
         return deck;
     }
 

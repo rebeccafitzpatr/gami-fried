@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { DeckDisplay } from './DeckDisplay';
 import { Deck } from '../services/DeckServices';
+import { DeckEditor } from '../components/DeckEditor';
 
 export const DeckDisplayWrapper: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [deck, setDeck] = useState<Deck | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [editing, setEditing] = useState(false);
+
 
   useEffect(() => {
     const fetchDeck = async () => {
@@ -43,5 +46,19 @@ export const DeckDisplayWrapper: React.FC = () => {
   if (error) return <div>Error: {error}</div>;
   if (!deck) return <div>No deck data</div>;
 
-  return <DeckDisplay deck={deck} />;
+  return (
+    <div>
+      <DeckDisplay deck={deck} />
+      <button onClick={() => setEditing(v => !v)}>
+        {editing ? 'Close Editor' : 'Edit Deck'}
+      </button>
+      {editing && (
+        <DeckEditor
+          deck={deck}
+          onSaved={updated => setDeck(updated)}
+          onCancel={() => setEditing(false)}
+        />
+      )}
+    </div>
+  );
 };
