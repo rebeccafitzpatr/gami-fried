@@ -28,10 +28,51 @@ public class DeckGenerationController : ControllerBase
         _store.AddDeck(deck);
         return Ok(deck);
     }
+
+    [HttpPut("{id:guid}")]
+    public IActionResult UpdateDeck(Guid id, [FromBody] UpdateDeckRequest req)
+    {
+        var updated = _store.UpdateDeck(id, req.Name, req.Prompt, req.Cards?.ConvertAll(c => new Card(c.Question, c.Answer)));
+        return updated is null ? NotFound() : Ok(updated);
+    }
+
+    [HttpPost("{id:guid}/regenerate")]
+    public async Task<IActionResult> Regenerate(Guid id, [FromBody] RegenerateRequest req)
+    {
+        var deck = _store.GetDeckById(id);
+        if (deck == null) return NotFound();
+
+        var prompt = req.Prompt ?? deck.Prompt ?? "";
+        var name = req.Name ?? deck.Name;
+
+        var regenerated = await _ai.GenerateDeckAsync(prompt, name);
+        _store.UpdateDeck(id, name, regenerated.Prompt, regenerated.Cards);
+
+        return Ok(_store.GetDeckById(id));
+    }
 }
 
 public class GenerateRequest
 {
     public string Prompt { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
+}
+
+public class RegenerateRequest
+{
+    public string? Prompt { get; set; }
+    public string? Name { get; set; }
+}
+
+public class UpdateDeckRequest
+{
+    public string? Name { get; set; }
+    public string? Prompt { get; set; }
+    public List<CardDTO>? Cards { get; set; }
+}
+
+public class CardDTO
+{
+    public string Question { get; set; } = string.Empty;
+    public string Answer { get; set; } = string.Empty;
 }

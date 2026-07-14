@@ -40,6 +40,27 @@ public class DeckStore
         
     }
 
+    public Deck? UpdateDeck(Guid id, string? name = null, string? prompt = null, List<Card>? cards = null)
+    {
+        lock (_lock)
+        {
+            var index = decks.FindIndex(d => d.Id == id);
+            if (index < 0) return null;
+
+            var current = decks[index];
+            var updated = current with
+            {
+                Name = name ?? current.Name,
+                Prompt = prompt ?? current.Prompt,
+                Cards = cards ?? current.Cards
+            };
+
+            decks[index] = updated;
+            Save();
+            return updated;
+        }
+    }
+
     //get all decks
     public IReadOnlyList<Deck> GetAllDecks()
     {

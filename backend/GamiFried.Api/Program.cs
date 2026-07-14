@@ -2,6 +2,7 @@ using GamiFried.Api.Models;
 using GamiFried.Api.Services;
 using System.Text.Json; 
 using System.Text.Json.Serialization;
+using GamiFried.Api.Controllers;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -75,6 +76,13 @@ app.MapGet("/decks/{id:guid}", (Guid id, DeckStore store) =>
     var deck = store.GetDeckById(id);
     return deck is not null ? Results.Ok(deck) : Results.NotFound();
 }).WithName("GetDeckById");
+
+app.MapPut("/decks/{id:guid}", (Guid id, UpdateDeckRequest req, DeckStore store) =>
+{
+    var updated = store.UpdateDeck(id, req.Name, req.Prompt, req.Cards?.ConvertAll(c => new Card(c.Question, c.Answer)));
+    return updated is null ? Results.NotFound() : Results.Ok(updated);
+}).WithName("UpdateDeck");
+
 app.MapControllers();
 
 app.Run();
