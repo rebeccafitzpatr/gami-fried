@@ -1,62 +1,37 @@
-import React, { JSX, useState } from 'react';
-import { createDeck, Deck, Card, generateAIDeck } from '../services/DeckServices';
+import React, { useState } from 'react';
+import { createDeck } from '../services/DeckServices';
+import { useNavigate } from 'react-router-dom';
 
-const DeckCreator= (): JSX.Element =>  {
-  const [deck, setDeck] = useState<Deck | null>(null);
-  const [loading, setLoading] = useState(false);
+const DeckCreator: React.FC = () => {
+  const [name, setName] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [name, setName] = useState<string>("");
-  const [prompt, setPrompt] = useState<string>("");
+  const navigate = useNavigate();
 
-  const generate = async () => {
-    setLoading(true);
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name.trim()) {
+      setError('Deck name is required');
+      return;
+    }
     setError(null);
     try {
-      const d = await generateAIDeck(prompt, name);
-      setDeck(d);
+      const deck = await createDeck({ name, cards: [] } as any);
+      navigate(`/deck/${deck.id}`);
     } catch (err: any) {
-      setError(err?.message ?? 'Unknown error');
-    } finally {
-      setLoading(false);
+      setError(err?.message ?? 'Failed to create deck');
     }
   };
 
-  
-
   return (
-    <div>
-      <input
-        value={name}
-        onChange={e => setName(e.target.value)}
-        placeholder="Deck name"
-      />
-      <input
-        value={prompt}
-        onChange={e => setPrompt(e.target.value)}
-        placeholder="Enter Prompt Here"
-      />
-      <button onClick={generate} disabled={loading}>
-        {loading ? 'Generating...' : 'Generate New Deck'}
-      </button>
-
-      {error && <div style={{ color: 'red' }}>{error}</div>}
-
-      {deck && (
-        <div style={{ marginTop: 20, textAlign: 'left' }}>
-          <h3>Deck: {deck.name}</h3>
-          <p>ID: {deck.id}</p>
-          <h4>Cards</h4>
-          <ul>
-            {(deck.cards ?? []).map((c, i) => (
-              <li key={i}>
-                <strong>Q:</strong> {c.question} <br />
-                <strong>A:</strong> {c.answer}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
+    <form className="deck-form" onSubmit={onSubmit} aria-label="Create new deck">
+      <h3>Create Deck</h3>
+      <div className="field">
+        <label>Name</label>
+        <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter deck name" />
+      </div>
+      {error && <div className="error">{error}</div>}
+      <button type="submit" className="btn btn-primary">Create</button>
+    </form>
   );
 };
 
