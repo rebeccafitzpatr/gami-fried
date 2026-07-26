@@ -1,0 +1,98 @@
+:root {
+  --bg: #0b1020;
+  --surface: #111827;
+  --text: #e5e7eb;
+  --muted: #93c5fd;
+  --primary: #4f46e5;
+  --shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto;
+  background: #0b1020;
+  color: var(--text);
+}
+
+.App {
+  min-height: 100vh;
+  padding-top: 68px; /* space for sticky navbar */
+}
+
+/* Navbar */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.25);
+  background: rgba(37,99,235,0.95);
+  box-shadow: var(--shadow);
+  backdrop-filter: saturate(1.2) blur(6px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: #fff;
+  gap: 8px;
+}
+
+.brand-logo {
+  height: 28px;
+  width: 28px;
+  border-radius: 6px;
+  /* optional subtle logo styling */
+  background: rgba(255,255,255,0.2);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.brand-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: .3px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 16px;
+    background: linear-gradient(135deg, rgba(37,99,235,0.95), rgba(59,130,246,0.95));
+
+}
+
+.link {
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.2s ease, color 0.2s;
+  font-weight: 500;
+}
+
+.link:hover { background: rgba(255,255,255,0.15); }
+
+.link.active {
+  background: rgba(255,255,255,0.25);
+  color: #0b1020;
+  font-weight: 700;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    padding: 10px;
+    flex-wrap: wrap;
+  }
+  .nav-links {
+    width: 100%;
+    margin-top: 6px;
+  }
+}
