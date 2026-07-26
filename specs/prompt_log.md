@@ -21,4 +21,6 @@
 
 `I want users to be able to take a deck and start a session of Anki style quizzing. On the Deck display page there is a button to start session and then go into the game space with the game play . Do you understand ? Implement this`
 
+`improve all of the src frontend files`
+
 # 

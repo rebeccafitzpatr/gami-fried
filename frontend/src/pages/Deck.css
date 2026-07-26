@@ -1,4 +1,4 @@
-Deck/UI improvements */
+/* Deck List Styles */
 .deck-container {
   padding: 16px;
   max-width: 1100px;
@@ -87,4 +87,64 @@ Deck/UI improvements */
 .card-tile:focus {
   outline: 3px solid #93c5fd;
   outline-offset: 0;
+}
+
+/* Deck List Styles */
+
+.deck-list {
+  padding: 20px;
+}
+
+.deck-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.deck-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.deck-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+}
+.deck-card:focus {
+  outline: 3px solid #93c5fd;
+  outline-offset: 2px;
+}
+.deck-card-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100%;
+}
+.deck-card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.deck-card-count {
+  font-size: 0.9rem;
+  color: #6b7280;
+  letter-spacing: 0.2px;
+}
+
+@media (max-width: 600px) {
+  .deck-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  .deck-card {
+    padding: 14px;
+  }
+  .deck-card-title {
+    font-size: 1rem;
+  }
 }
