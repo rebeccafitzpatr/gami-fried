@@ -10,7 +10,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
-  gap: 12px;
+  /* gap: 12px; */
 }
 
 .deck-title {
@@ -39,6 +39,7 @@
   align-items: center;
   gap: 12px;
   margin: 8px 0 12px;
+  flex-wrap: wrap;
 }
 
 .search-input {
@@ -59,34 +60,30 @@
   gap: 12px;
 }
 
+/* Card tiles (flip cards) */
 .card-tile {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 12px;
-  min-height: 72px;
+  height: 180px;
+  perspective: 1000px;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 12px;
 }
-
-.card-tile:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+.card-inner {
+  position: relative; width: 100%; height: 100%;
+  transform-style: preserve-3d; transition: transform 0.6s ease;
 }
-
-.card-content {
-  font-size: 14px;
-  line-height: 1.5;
-  color: #374151;
+.card-face {
+  position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+  display: flex; align-items: center; justify-content: center;
+  padding: 12px; box-sizing: border-box;
+  border: 1px solid #e5e7eb; border-radius: 12px;
+  background: #fff;
 }
-
-.card-content strong {
-  font-weight: 700;
-}
-
-.card-tile:focus {
-  outline: 3px solid #93c5fd;
-  outline-offset: 0;
+.card-tile .front { }
+.card-tile .back { transform: rotateY(180deg); }
+.card-tile.flipped .card-inner { transform: rotateY(180deg); }
+.card-tile:focus { outline: 3px solid #93c5fd; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .card-inner { transition: none; }
 }
 
 /* Deck List Styles */
@@ -104,7 +101,7 @@
 .deck-card {
   display: block;
   text-decoration: none;
-  color: inherit;
+  /* color: inherit; */
   border: 1px solid #e5e7eb;
   background: #fff;
   border-radius: 12px;
@@ -147,4 +144,97 @@
   .deck-card-title {
     font-size: 1rem;
   }
+}
+
+
+/* Deck creator styles */
+.deck-form {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  width: min(100%, 520px);
+  margin: 0 auto;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.deck-form .field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.deck-form label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.deck-form .input {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 14px;
+}
+
+.deck-form .input:focus {
+  outline: 3px solid #93c5fd;
+  outline-offset: 2px;
+}
+
+.deck-form .error {
+  color: #e11d48; /* red for errors */
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+@media (prefers-color-scheme: light) {
+  /* Light-mode overrides for inputs inside the deck form to ensure contrast */
+  html[data-theme="light"] .deck-form .input {
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.2);
+    color: #111;
+  }
+}
+
+.deck-session { padding: 16px; max-width: 800px; margin: 0 auto; background: var(--surface); border-radius: 12px; border:1px solid rgba(0,0,0,.15); }
+.deck-session .deck-header { margin-bottom: 12px; }
+.card-area { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 12px; border-radius: 12px; }
+.qa { text-align: center; font-size: 1.25rem; }
+.q { font-weight: 700; }
+.a { font-weight: 600; color: var(--muted); }
+
+/* Editor styling (DeckEditor) */
+.deck-editor { padding: 14px; border-radius: 12px; background: var(--surface); border: 1px solid rgba(0,0,0,0.15); box-shadow: 0 6px 18px rgba(0,0,0,0.08); max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.deck-editor .field { display: flex; flex-direction: column; gap: 6px; }
+.deck-editor input, .deck-editor textarea { padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.15); background: var(--surface); color: var(--text); }
+.deck-editor .card-edit-row { display:flex; justify-content: space-between; gap: 8px; padding: 6px 0; }
+.deck-editor button { margin-top: 6px; }
+
+.input { width: 100%; }
+
+/* Light theme overrides (already included to ensure contrast) */
+html[data-theme="light"] .deck-container,
+html[data-theme="light"] .deck-session,
+html[data-theme="light"] .deck-editor {
+  background: #fff;
+  color: #111;
+}
+
+/*Deck display wrapper*/
+
+.deck-skeleton {
+  height: 120px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e5e5e5 37%, #f0f0f0 63%);
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 0% 0; }
+  100% { background-position: 100% 0; }
 }

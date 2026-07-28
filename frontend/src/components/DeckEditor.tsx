@@ -55,17 +55,19 @@ export const DeckEditor: React.FC<Props> = ({ deck, onSaved, onCancel }) => {
 
   // Minimal UI scaffold
   return (
-    <div className="deck-editor">
-      <h3>Edit Deck</h3>
-      <label>Name
-        <input value={name} onChange={e => setName(e.target.value)} />
-      </label>
-      <label>Prompt
-        <textarea value={prompt} onChange={e => setPrompt(e.target.value)} />
-      </label>
+    <section className="deck-editor" aria-label="Edit deck">
+      <h3 className="deck-title">Edit Deck</h3>
+      <div className="field">
+        <label>Name</label>
+        <input value={name} onChange={e => setName(e.target.value)} className="input" />
+      </div>
+      <div className="field">
+        <label>Prompt</label>
+        <textarea value={prompt} onChange={e => setPrompt(e.target.value)} className="input" />
+      </div>
       <div className="cards-editor">
         {cards.map((c, idx) => (
-          <div key={idx}>
+          <div key={idx} className="card-edit-row">
             <input value={c.question} onChange={ev => {
               const v = ev.target.value;
               setCards(cs => cs.map((cc, i) => i === idx ? { ...cc, question: v } : cc));
@@ -75,15 +77,16 @@ export const DeckEditor: React.FC<Props> = ({ deck, onSaved, onCancel }) => {
               setCards(cs => cs.map((cc, i) => i === idx ? { ...cc, answer: v } : cc));
             }} placeholder="Answer" />
             <button type="button" onClick={() => deleteCard(idx)}>Delete</button>
-
           </div>
         ))}
       </div>
-      {error && <div style={{ color: 'red' }}>{error}</div>}
-      <button onClick={addCard}>Add Card</button>
-      <button onClick={save} disabled={loading}>{loading ? 'Saving...' : 'Save'}</button>
-      <button onClick={onCancel}>Cancel</button>
-    </div>
+      {error && <div className="error" role="alert" style={{ color: '#e11d48' }}>{error}</div>}
+      <button type="button" onClick={addCard}>Add Card</button>
+      <button onClick={save} disabled={loading} className="btn btn-primary" style={{ marginLeft: 6 }}>
+        {loading ? 'Saving...' : 'Save'}
+      </button>
+      <button onClick={onCancel} className="btn" style={{ marginLeft: 6 }}>Cancel</button>
+    </section>
   );
 };
 

@@ -19,18 +19,20 @@ const CardTile: React.FC<{ card: Card }> = ({ card }) => {
       tabIndex={0}
       role="button"
       aria-pressed={revealed}
+      aria-label={revealed ? 'Show question' : 'Show answer'}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           setRevealed((v) => !v);
         }
       }}
     >
-      <div className="card-content">
-        {revealed ? (
-          <span><strong>A:</strong> {card.answer}</span>
-        ) : (
+      <div className="card-inner">
+        <div className="card-face front">
           <span><strong>Q:</strong> {card.question}</span>
-        )}
+        </div>
+        <div className="card-face back">
+          <span><strong>A:</strong> {card.answer}</span>
+        </div>
       </div>
     </article>
   );
@@ -66,6 +68,7 @@ export const DeckDisplay: React.FC<DeckDisplayProps> = ({ deck }) => {
           onChange={(e) => setQuery(e.target.value)}
         />
         <span className="card-count">{filteredCards.length} cards</span>
+        {query && <button className="btn" onClick={() => setQuery('')}>Clear</button>}
       </div>
 
       <section className="deck-grid" aria-label="Deck cards">

@@ -23,15 +23,30 @@ const DeckCreator: React.FC = () => {
   };
 
   return (
-    <form className="deck-form" onSubmit={onSubmit} aria-label="Create new deck">
-      <h3>Create Deck</h3>
-      <div className="field">
-        <label>Name</label>
-        <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Enter deck name" />
-      </div>
-      {error && <div className="error">{error}</div>}
-      <button type="submit" className="btn btn-primary">Create</button>
-    </form>
+    <section className="deck-container" aria-label="Create new deck">
+      
+
+      <form className="deck-form" onSubmit={onSubmit} aria-label="Create new deck">
+        <header className="deck-header">
+          <h2 className="deck-title">Create Deck</h2>
+        </header>
+        <div className="field">
+          <label htmlFor="deck-name">Name</label>
+          <input
+            id="deck-name"
+            className="input"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Enter deck name"
+            autoFocus
+          />
+        </div>
+        {error && <div className="error" role="alert">{error}</div>}
+        <button type="submit" className="btn btn-primary" disabled={!name.trim()}>
+          Create
+        </button>
+      </form>
+    </section>
   );
 };
 

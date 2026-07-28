@@ -50,7 +50,7 @@ html[data-theme="light"] {
 }
 html[data-theme="dark"] {
   --bg: #0b1020;
-  --surface: #111827;
+  --surface: #15213b;
   --text: #e5e7eb;
   --muted: #93c5fd;
   --primary: #4f46e5;

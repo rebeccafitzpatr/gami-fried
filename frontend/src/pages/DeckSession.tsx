@@ -24,17 +24,19 @@ export const DeckSession: React.FC = () => {
 
   return (
     <section className="deck-session" aria-label="Deck session">
-      <h3>Session: {deck.name}</h3>
+      <header className="deck-header">
+        <h3 className="deck-title">{deck.name} — Session</h3>
+      </header>
       <div className="card-area" role="group" aria-label="Current card">
         <div className="qa">
           <div className="q">Q: {current?.question}</div>
           {revealed && <div className="a">A: {current?.answer}</div>}
         </div>
         <div className="controls">
-          <button className="btn" onClick={() => setRevealed((r) => !r)}>
+          <button className="btn" onClick={() => setRevealed((r) => !r)} aria-label="Toggle answer">
             {revealed ? 'Hide' : 'Show'} Answer
           </button>
-          <button className="btn btn-primary" onClick={next}>Next</button>
+          <button className="btn btn-primary" onClick={next} aria-label="Next card">Next</button>
         </div>
       </div>
     </section>
