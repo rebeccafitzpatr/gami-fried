@@ -23,4 +23,6 @@
 
 `improve all of the src frontend files`
 
+`add a light mode and dark mode switcher `
+
 # 

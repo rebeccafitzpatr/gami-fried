@@ -7,6 +7,15 @@
   --shadow: 0 6px 16px rgba(0,0,0,0.25);
 }
 
+html[data-theme="light"] {
+  --bg: #f7f7f7;
+  --surface: #ffffff;
+  --text: #111;
+  --muted: #6b7280;
+  --primary: #4f46e5;
+  --shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
 * { box-sizing: border-box; }
 
 html, body, #root { height: 100%; }
@@ -65,7 +74,7 @@ body {
 .nav-links {
   display: flex;
   gap: 16px;
-    background: linear-gradient(135deg, rgba(37,99,235,0.95), rgba(59,130,246,0.95));
+  background:  rgba(200, 200, 200, 0.25);
 
 }
 
@@ -82,9 +91,36 @@ body {
 
 .link.active {
   background: rgba(255,255,255,0.25);
-  color: #0b1020;
+  /* color: #0b1020; */
   font-weight: 700;
 }
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.5);
+  color: #fff;
+  border-radius: 999px;
+  cursor: pointer;
+  margin-left: 8px;
+}
+.theme-toggle:focus { outline: 3px solid #93c5fd; outline-offset: 2px; }
+
+/* Light theme overrides for navbar visuals */
+html[data-theme="light"] .navbar { background: #ffffff; border-bottom: 1px solid rgba(0,0,0,0.08); box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+html[data-theme="light"] .link { color: #111; }
+html[data-theme="light"] .link.active { background: rgba(0,0,0,0.05); color: #111; }
+html[data-theme="light"] .brand { color: #111; }
+html[data-theme="light"] .brand-logo { background: rgba(0,0,0,0.05); }
+html[data-theme="light"] .theme-toggle { background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1); color: #111; }
+
+.theme-toggle svg { display: block; width: 18px; height: 18px; color: currentColor; }
+
 
 @media (max-width: 600px) {
   .navbar {
