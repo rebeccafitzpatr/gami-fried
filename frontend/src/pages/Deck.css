@@ -171,6 +171,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 14px;
+  margin-top: 1rem;
 }
 
 .card-tile {
@@ -298,6 +299,7 @@
 .field {
   display: grid;
   gap: 6px;
+  margin: 2.5rem 0;
 }
 
 .field label {
