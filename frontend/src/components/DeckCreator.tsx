@@ -24,28 +24,34 @@ const DeckCreator: React.FC = () => {
 
   return (
     <section className="deck-container" aria-label="Create new deck">
-      
-
-      <form className="deck-form" onSubmit={onSubmit} aria-label="Create new deck">
-        <header className="deck-header">
-          <h2 className="deck-title">Create Deck</h2>
+      <div className="deck-form">
+        <header className="deck-title-block">
+          <span className="eyebrow">Create</span>
+          <h2 className="deck-title">Craft a new study deck</h2>
+          <p className="deck-subtitle">Start with a title, then expand your deck with polished flashcards tailored to your topic.</p>
         </header>
-        <div className="field">
-          <label htmlFor="deck-name">Name</label>
-          <input
-            id="deck-name"
-            className="input"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter deck name"
-            autoFocus
-          />
-        </div>
-        {error && <div className="error" role="alert">{error}</div>}
-        <button type="submit" className="btn btn-primary" disabled={!name.trim()}>
-          Create
-        </button>
-      </form>
+
+        <form onSubmit={onSubmit} aria-label="Create new deck">
+          <div className="field">
+            <label htmlFor="deck-name">Deck name</label>
+            <input
+              id="deck-name"
+              className="input"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="e.g. Biology Final Review"
+              autoFocus
+            />
+            <span className="field-hint">Choose a concise title you can recognize at a glance.</span>
+          </div>
+          {error && <div className="error" role="alert">{error}</div>}
+          <div className="editor-footer">
+            <button type="submit" className="btn btn-primary" disabled={!name.trim()}>
+              Create deck
+            </button>
+          </div>
+        </form>
+      </div>
     </section>
   );
 };

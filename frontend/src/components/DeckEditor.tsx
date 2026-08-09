@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Deck, Card, updateDeck, regenerateDeck } from '../services/DeckServices';
+import { Deck, updateDeck, regenerateDeck } from '../services/DeckServices';
 
 interface Props {
   deck: Deck;
@@ -55,37 +55,47 @@ export const DeckEditor: React.FC<Props> = ({ deck, onSaved, onCancel }) => {
 
   // Minimal UI scaffold
   return (
-    <section className="deck-editor" aria-label="Edit deck">
-      <h3 className="deck-title">Edit Deck</h3>
-      <div className="field">
-        <label>Name</label>
-        <input value={name} onChange={e => setName(e.target.value)} className="input" />
+    <section className="deck-editor-shell" aria-label="Edit deck">
+      <div className="deck-editor">
+        <header className="deck-title-block">
+          <span className="eyebrow">Edit</span>
+          <h3 className="deck-title">Refine this deck</h3>
+          <p className="deck-helper">Update the deck title, adjust the source prompt, or fine-tune individual flashcards.</p>
+        </header>
+
+        <div className="field">
+          <label htmlFor="deck-editor-name">Deck name</label>
+          <input id="deck-editor-name" value={name} onChange={e => setName(e.target.value)} className="input" />
+        </div>
+        <div className="field">
+          <label htmlFor="deck-editor-prompt">Prompt</label>
+          <textarea id="deck-editor-prompt" value={prompt} onChange={e => setPrompt(e.target.value)} className="input" />
+          <span className="field-hint">Changing the prompt will regenerate the deck with updated flashcards.</span>
+        </div>
+        <div className="cards-editor">
+          {cards.map((c, idx) => (
+            <div key={idx} className="card-edit-row">
+              <input value={c.question} onChange={ev => {
+                const v = ev.target.value;
+                setCards(cs => cs.map((cc, i) => i === idx ? { ...cc, question: v } : cc));
+              }} placeholder="Question" aria-label={`Question ${idx + 1}`} />
+              <input value={c.answer} onChange={ev => {
+                const v = ev.target.value;
+                setCards(cs => cs.map((cc, i) => i === idx ? { ...cc, answer: v } : cc));
+              }} placeholder="Answer" aria-label={`Answer ${idx + 1}`} />
+              <button className="btn btn-danger" type="button" onClick={() => deleteCard(idx)}>Delete</button>
+            </div>
+          ))}
+        </div>
+        {error && <div className="error" role="alert">{error}</div>}
+        <div className="editor-footer">
+          <button className="btn btn-secondary" type="button" onClick={addCard}>Add card</button>
+          <button type="button" onClick={save} disabled={loading} className="btn btn-primary">
+            {loading ? 'Saving...' : 'Save changes'}
+          </button>
+          <button type="button" onClick={onCancel} className="btn">Cancel</button>
+        </div>
       </div>
-      <div className="field">
-        <label>Prompt</label>
-        <textarea value={prompt} onChange={e => setPrompt(e.target.value)} className="input" />
-      </div>
-      <div className="cards-editor">
-        {cards.map((c, idx) => (
-          <div key={idx} className="card-edit-row">
-            <input value={c.question} onChange={ev => {
-              const v = ev.target.value;
-              setCards(cs => cs.map((cc, i) => i === idx ? { ...cc, question: v } : cc));
-            }} placeholder="Question" />
-            <input value={c.answer} onChange={ev => {
-              const v = ev.target.value;
-              setCards(cs => cs.map((cc, i) => i === idx ? { ...cc, answer: v } : cc));
-            }} placeholder="Answer" />
-            <button type="button" onClick={() => deleteCard(idx)}>Delete</button>
-          </div>
-        ))}
-      </div>
-      {error && <div className="error" role="alert" style={{ color: '#e11d48' }}>{error}</div>}
-      <button type="button" onClick={addCard}>Add Card</button>
-      <button onClick={save} disabled={loading} className="btn btn-primary" style={{ marginLeft: 6 }}>
-        {loading ? 'Saving...' : 'Save'}
-      </button>
-      <button onClick={onCancel} className="btn" style={{ marginLeft: 6 }}>Cancel</button>
     </section>
   );
 };

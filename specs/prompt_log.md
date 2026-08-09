@@ -25,4 +25,6 @@
 
 `add a light mode and dark mode switcher `
 
+`go through each of the frontend files/components and make sure it has a cohesive and sleek, appealing visual design.`
+
 # 

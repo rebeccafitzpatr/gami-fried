@@ -20,12 +20,27 @@ export const DeckSession: React.FC = () => {
     setRevealed(false);
   };
 
-  if (!deck) return <div>Loading session...</div>;
+  if (!deck) {
+    return (
+      <section className="deck-session" aria-label="Deck session loading">
+        <div className="deck-title-block">
+          <span className="eyebrow">Session</span>
+          <h3 className="deck-title">Loading session…</h3>
+          <p className="deck-subtitle">Gathering your next review card.</p>
+        </div>
+        <div className="deck-skeleton" aria-hidden="true" />
+      </section>
+    );
+  }
 
   return (
     <section className="deck-session" aria-label="Deck session">
-      <header className="deck-header">
-        <h3 className="deck-title">{deck.name} — Session</h3>
+      <header className="deck-session-header">
+        <div className="deck-title-block">
+          <span className="eyebrow">Session</span>
+          <h3 className="deck-title">{deck.name}</h3>
+          <p className="session-progress">Card {Math.min(idx + 1, deck.cards.length)} of {deck.cards.length}</p>
+        </div>
       </header>
       <div className="card-area" role="group" aria-label="Current card">
         <div className="qa">
@@ -33,10 +48,10 @@ export const DeckSession: React.FC = () => {
           {revealed && <div className="a">A: {current?.answer}</div>}
         </div>
         <div className="controls">
-          <button className="btn" onClick={() => setRevealed((r) => !r)} aria-label="Toggle answer">
-            {revealed ? 'Hide' : 'Show'} Answer
+          <button className="btn btn-secondary" onClick={() => setRevealed((r) => !r)} aria-label="Toggle answer">
+            {revealed ? 'Hide answer' : 'Reveal answer'}
           </button>
-          <button className="btn btn-primary" onClick={next} aria-label="Next card">Next</button>
+          <button className="btn btn-primary" onClick={next} aria-label="Next card">Next card</button>
         </div>
       </div>
     </section>

@@ -42,8 +42,12 @@ export const DeckDisplayWrapper: React.FC = () => {
   if (loading) {
     return (
       <section className="deck-container" aria-label="Deck display">
-        <div className="deck-header" aria-label="Deck header loading" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <h2 className="deck-title">Loading deck…</h2>
+        <div className="deck-wrapper-header">
+          <div className="deck-title-block">
+            <span className="eyebrow">Loading</span>
+            <h2 className="deck-title">Loading deck…</h2>
+            <p className="deck-subtitle">Preparing your cards and session tools.</p>
+          </div>
         </div>
         <div className="deck-skeleton" aria-label="Loading deck content" />
       </section>
@@ -52,7 +56,16 @@ export const DeckDisplayWrapper: React.FC = () => {
 
   if (error) return (
     <section className="deck-container" aria-label="Deck display">
-      <div className="error" role="alert">Error: {error}</div>
+      <div className="deck-wrapper-header">
+        <div className="deck-title-block">
+          <span className="eyebrow">Error</span>
+          <h2 className="deck-title">Couldn’t open deck</h2>
+          <p className="deck-subtitle">{error}</p>
+        </div>
+        <div className="deck-header-actions">
+          <Link to="/" className="btn btn-secondary" aria-label="Back to decks">Back to decks</Link>
+        </div>
+      </div>
     </section>
   );
 
@@ -60,16 +73,20 @@ export const DeckDisplayWrapper: React.FC = () => {
 
   return (
     <section className="deck-container" aria-label="Deck display">
-      <div className="deck-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
-        <h2 className="deck-title">{deck.name}</h2>
-        <div style={{ display: 'flex', gap: 8 }}>
+      <div className="deck-wrapper-header">
+        <div className="deck-title-block">
+          <span className="eyebrow">Workspace</span>
+          <h2 className="deck-title">{deck.name}</h2>
+          <p className="deck-subtitle">Review the deck, polish content, or move directly into session mode.</p>
+        </div>
+        <div className="deck-header-actions">
           <button
-            className="btn"
+            className="btn btn-secondary"
             onClick={() => setEditing((e) => !e)}
             aria-expanded={editing}
             aria-label={editing ? 'Close editor' : 'Edit deck'}
           >
-            {editing ? 'Close Editor' : 'Edit Deck'}
+            {editing ? 'Close editor' : 'Edit deck'}
           </button>
           <Link to="/" className="btn" aria-label="Back to decks">Back</Link>
         </div>

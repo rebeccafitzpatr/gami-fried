@@ -51,30 +51,46 @@ export const DeckDisplay: React.FC<DeckDisplayProps> = ({ deck }) => {
   }, [deck.cards, query]);
 
   return (
-    <div className="deck-container">
+    <div className="deck-panel">
       <header className="deck-header">
-        <h2 className="deck-title">{deck.name}</h2>
-        <button className="btn btn-primary start-btn" onClick={() => navigate(`/deck/${deck.id}/session`)}>
-          Start Session
-        </button>
+        <div className="deck-title-block">
+          <span className="eyebrow">Deck</span>
+          <h2 className="deck-title">{deck.name}</h2>
+          <p className="deck-subtitle">Flip any card to reveal the answer or launch a focused study session.</p>
+        </div>
+        <div className="deck-header-actions">
+          <button className="btn btn-primary start-btn" onClick={() => navigate(`/deck/${deck.id}/session`)}>
+            Start Session
+          </button>
+        </div>
       </header>
 
       <div className="toolbar" aria-label="deck toolbar">
-        <input
-          className="search-input"
-          aria-label="Search cards"
-          placeholder="Search questions or answers..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-        <span className="card-count">{filteredCards.length} cards</span>
-        {query && <button className="btn" onClick={() => setQuery('')}>Clear</button>}
+        <label className="search-shell">
+          <span aria-hidden="true">⌕</span>
+          <input
+            className="search-input"
+            aria-label="Search cards"
+            placeholder="Search questions or answers..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </label>
+        <div className="deck-actions">
+          <span className="card-count">{filteredCards.length} {filteredCards.length === 1 ? 'card' : 'cards'}</span>
+          {query && <button className="btn btn-secondary" onClick={() => setQuery('')}>Clear</button>}
+        </div>
       </div>
 
       <section className="deck-grid" aria-label="Deck cards">
-        {filteredCards.map((c, i) => (
-          <CardTile key={i} card={c} />
-        ))}
+        {filteredCards.length > 0 ? (
+          filteredCards.map((c, i) => <CardTile key={i} card={c} />)
+        ) : (
+          <div className="deck-empty" role="status">
+            <h3 className="deck-title">No cards match that search</h3>
+            <p className="empty-copy">Try a different keyword or clear the search to browse the full deck.</p>
+          </div>
+        )}
       </section>
     </div>
   );
